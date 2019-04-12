@@ -19,32 +19,32 @@ The goal is to deliver an application into production globally in an automated a
 
 ## Chapters
 
-### Version control
+### 1. Version control
 
 Clone the application code into your own repository
 
-### Containerization
+### 2. Containerization
 
 How to execute and distribute an environment agnostic application.
 
 #### Principles
 - Containerization
 
-### Your first pipeline (CI)
+### 3. Your first pipeline (CI)
 
 Set up a pipeline that pulls your code and runs the unit test suite.
 
 #### Principles
 - Continous Integration
 
-### Container Registry (CD part i)
+### 4. Container Registry (CD part i)
 
 Extend the pipeline to push your docker image to the docker registry (ECR)
 
 #### Principles
 - Continous Deployment
 
-### Container Cluster
+### 5. Container Cluster
 
 Set up a Fargate cluster as the runtime environment for your docker containers using infrastructure as code.
 
@@ -54,25 +54,25 @@ Set up a Fargate cluster as the runtime environment for your docker containers u
 - Cost optimization
 - Security
 
-### Container cluster deployment pipeline (CD part ii)
+### 6. Container cluster deployment pipeline (CD part ii)
 
 Extend the pipeline to deploy docker containers in the container cluster using images from the docker registry.
 
 #### Principles
 - Continous Deployment
 
-### Verify that the application is reachable over the internet
+### 7. Verify that the application is reachable over the internet
 
 Connect to the load balancer address of the running application container and verify that it's reachable and up and running.
 
-### Scale out the application
+### 8. Scale out the application
 
 Modify the code that defines the container cluster to run more instances in parallel.
 
 #### Principles
 - Reliability
 
-### Cloud services - databases
+### 9. Cloud services - databases
 
 The application needs a document database as a backend. Set up a DynamoDB instance using infrastructure as code.
 
@@ -80,7 +80,7 @@ The application needs a document database as a backend. Set up a DynamoDB instan
 - Serverless
 - Managed Services
 
-### Global scale out
+### 10. Global scale out
 
 Run the application in multiple regions using geolocation routing in Route 53.
 
