@@ -92,3 +92,12 @@ Run the application in multiple regions using geolocation routing in Route 53.
 - Verify that there are no service limits when e.g. running a cluster per student
 - Determine what the best account set up is for the course
 - What is the relationship between this course and the CI/CD introduction course? Will this course supersede the CI/CD course?
+
+## Cloud Native - Part ii
+
+Build upon the first part and add new principles
+
+### Principles:
+- 3R's of Enterprise Security
+- Auto-scaling
+- Monitoring and Tracing
