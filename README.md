@@ -17,6 +17,14 @@ The goal is to deliver an application into production globally in an automated a
 - Serverless
 - Managed Services
 
+## Prerequisites
+
+You need to have the following installed on your laptop:
+
+- Java
+- Docker
+- An IDE: IntelliJ or Eclipse for example
+
 ## Chapters
 
 ### 1. Version control
@@ -101,3 +109,4 @@ Build upon the first part and add new principles
 - 3R's of Enterprise Security
 - Auto-scaling
 - Monitoring and Tracing
+- Structured log data
