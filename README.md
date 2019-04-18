@@ -44,6 +44,7 @@ Set up a pipeline that pulls your code and runs the unit test suite.
 
 #### Principles
 - Continous Integration
+- Infrastrucure as Code
 
 ### 4. Container Registry (CD part i)
 
@@ -51,6 +52,7 @@ Extend the pipeline to push your docker image to the docker registry (ECR)
 
 #### Principles
 - Continous Deployment
+- Infrastrucure as Code
 
 ### 5. Container Cluster
 
@@ -100,6 +102,8 @@ Run the application in multiple regions using geolocation routing in Route 53.
 - Verify that there are no service limits when e.g. running a cluster per student
 - Determine what the best account set up is for the course
 - What is the relationship between this course and the CI/CD introduction course? Will this course supersede the CI/CD course?
+
+Yes it will. CI/CD is an integral part of the cloud native course and will introduce CI/CD concepts to the students in a more realistic environment than the CI/CD introduction course.
 
 ## Cloud Native - Part ii
 
