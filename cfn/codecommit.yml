@@ -1,4 +1,3 @@
-# Deprecated. CodeCommit requires too much extra configuration.
 AWSTemplateFormatVersion: '2010-09-09'
 
 Resources:
