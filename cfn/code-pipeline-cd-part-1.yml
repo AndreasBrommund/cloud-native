@@ -1,5 +1,5 @@
 Description: >
-  CI pipeline for CodeBuild and Code Pipeline
+  Continuous Delivery pipeline for CodeBuild and CodePipeline to ECR
 
 Resources:
   CodeBuildServiceRole:
@@ -88,13 +88,12 @@ Resources:
   ArtifactBucket:
     Type: AWS::S3::Bucket
     Properties:
-      BucketName: !Sub "cloud-native-application-${AWS::AccountId}-codepipeline-artifacts"
+      BucketName: !Sub "cloud-native-application-${AWS::AccountId}-codepipeline-artifacts-cd"
 
   CodeBuildProject:
     Type: AWS::CodeBuild::Project
-    DependsOn: [ CodeBuildServiceRole ]
     Properties:
-      Name: !Sub "cloud-native-application-CI"
+      Name: !Sub "cloud-native-application-CD"
       Artifacts:
         Type: "CODEPIPELINE"
       Source:
@@ -102,11 +101,20 @@ Resources:
         BuildSpec: |
           version: 0.2
           phases:
+            pre_build:
+              commands:
+                - echo Logging in to Amazon ECR...
+                - $(aws ecr get-login --region $AWS_DEFAULT_REGION --no-include-email)
             build:
               commands:
                 - echo Build started on `date`
                 - echo Building the Docker image...
                 - docker build -t $AWS_ACCOUNT_ID.dkr.ecr.$AWS_DEFAULT_REGION.amazonaws.com/$IMAGE_REPO_NAME:$IMAGE_TAG .
+            post_build:
+              commands:
+                - echo Build completed on `date`
+                - echo Pushing the Docker image...
+                - docker push $AWS_ACCOUNT_ID.dkr.ecr.$AWS_DEFAULT_REGION.amazonaws.com/$IMAGE_REPO_NAME:$IMAGE_TAG
       Environment:
         ComputeType: BUILD_GENERAL1_SMALL
         Image: "aws/codebuild/docker:18.09.0"
@@ -125,14 +133,13 @@ Resources:
 
   Pipeline:
     Type: AWS::CodePipeline::Pipeline
-    DependsOn: [ CodePipelineServiceRole, CodeBuildProject ]
     Properties:
       RoleArn: !GetAtt CodePipelineServiceRole.Arn
       RestartExecutionOnUpdate: False
       ArtifactStore:
         Type: S3
         Location: !Ref ArtifactBucket
-      Name: "cloud-native-application-pipeline-ci"
+      Name: "cloud-native-application-pipeline-cd"
       Stages:
         - Name: Source
           Actions:
@@ -144,13 +151,13 @@ Resources:
                 Provider: CodeCommit
               Configuration:
                 RepositoryName: "cloud-native-application"
-                BranchName: "feature"
+                BranchName: "master"
               OutputArtifacts:
                 - Name: App
               RunOrder: 1
-        - Name: "BuildAndTest"
+        - Name: "BuildTestAndDeliver"
           Actions:
-            - Name: "BuildAndTest"
+            - Name: "BuildTestAndDeliver"
               ActionTypeId:
                 Category: Build
                 Owner: AWS
