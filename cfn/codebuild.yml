@@ -8,6 +8,10 @@ Parameters:
     Default: master
   ECRRepositoryName:
     Type: String
+  Cluster:
+    Type: String
+  Service:
+    Type: String
 
 Resources:
 
@@ -109,6 +113,12 @@ Resources:
               - Resource: "*"
                 Effect: Allow
                 Action:
+                  - ecs:DescribeServices
+                  - ecs:DescribeTaskDefinition
+                  - ecs:DescribeTasks
+                  - ecs:ListTasks
+                  - ecs:RegisterTaskDefinition
+                  - ecs:UpdateService
                   - codebuild:StartBuild
                   - codebuild:BatchGetBuilds
                   - cloudformation:*
@@ -146,21 +156,22 @@ Resources:
               commands:
                 - echo Logging in to Amazon ECR...
                 - $(aws ecr get-login --region $AWS_DEFAULT_REGION --no-include-email)
+                - IMAGE_URI="$AWS_ACCOUNT_ID.dkr.ecr.$AWS_DEFAULT_REGION.amazonaws.com/$IMAGE_REPO_NAME:$IMAGE_TAG"
             build:
               commands:
                 - echo Build started on `date`
                 - echo Building the Docker image...
-                - docker build -t $AWS_ACCOUNT_ID.dkr.ecr.$AWS_DEFAULT_REGION.amazonaws.com/$IMAGE_REPO_NAME:$IMAGE_TAG .
+                - docker build -t "$IMAGE_URI" .
             post_build:
               commands:
                 - echo Build completed on `date`
                 - echo Pushing the Docker image...
-                - docker push $AWS_ACCOUNT_ID.dkr.ecr.$AWS_DEFAULT_REGION.amazonaws.com/$IMAGE_REPO_NAME:$IMAGE_TAG
-          # artifacts:
-          #   files:
-          #     - build.json
+                - docker push "$IMAGE_URI"
+                - printf '[{"name":"simple-app","imageUri":"%s"}]' "$IMAGE_URI" > images.json
+          artifacts:
+            files: images.json
       Environment:
-        ComputeType: BUILD_GENERAL1_SMALL     #BUILD_GENERAL1_LARGE
+        ComputeType: BUILD_GENERAL1_SMALL
         Image: "aws/codebuild/docker:18.09.0"
         Type: "LINUX_CONTAINER"
         PrivilegedMode: "true"
@@ -218,16 +229,21 @@ Resources:
               OutputArtifacts:
                 - Name: BuildOutput
               RunOrder: 1
-
-            # - Name: Approval
-            #   ActionTypeId:
-            #     Category: Approval
-            #     Owner: AWS
-            #     Version: 1
-            #     Provider: "Manual"
-            #   RunOrder: 2
-
-
+        - Name: Deploy
+          Actions:
+            - Name: Deploy
+              ActionTypeId:
+                Category: Deploy
+                Owner: AWS
+                Version: 1
+                Provider: ECS
+              Configuration:
+                ClusterName: !Ref Cluster
+                ServiceName: !Ref Service
+                FileName: images.json
+              InputArtifacts:
+                - Name: BuildOutput
+              RunOrder: 1
 
 Outputs:
   PipelineUrl:
