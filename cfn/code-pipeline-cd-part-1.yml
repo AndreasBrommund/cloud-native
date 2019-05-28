@@ -1,21 +1,7 @@
 Description: >
-  CICD for a custom codebuild container using CodeCommit, Codepipeline and Codebuild. - this custom container does maven build and docker push to ECR
-Parameters:
-  CodeCommitRepo:
-    Type: String
-  CodeCommitBranch:
-    Type: String
-    Default: master
-  ECRRepositoryName:
-    Type: String
-  Cluster:
-    Type: String
-  Service:
-    Type: String
+  Continuous Delivery pipeline for CodeBuild and CodePipeline to ECR
 
 Resources:
-  ### IAM Permissions
-
   CodeBuildServiceRole:
     Type: AWS::IAM::Role
     DeletionPolicy: Delete
@@ -89,12 +75,6 @@ Resources:
               - Resource: "*"
                 Effect: Allow
                 Action:
-                  - ecs:DescribeServices
-                  - ecs:DescribeTaskDefinition
-                  - ecs:DescribeTasks
-                  - ecs:ListTasks
-                  - ecs:RegisterTaskDefinition
-                  - ecs:UpdateService
                   - codebuild:StartBuild
                   - codebuild:BatchGetBuilds
                   - cloudformation:*
@@ -105,20 +85,15 @@ Resources:
                   - codecommit:GetUploadArchiveStatus
                   - codecommit:UploadArchive
 
-
-  ### CodePipeline & Codebuild
   ArtifactBucket:
     Type: AWS::S3::Bucket
     Properties:
-      BucketName: !Sub "${CodeCommitRepo}-${AWS::AccountId}-codepipeline-artifacts"
+      BucketName: !Sub "cloud-native-application-${AWS::AccountId}-codepipeline-artifacts-cd"
 
-  # ref: http://docs.aws.amazon.com/codebuild/latest/userguide/build-env-ref.html
-  # CODEBUILD_RESOLVED_SOURCE_VERSION : Commit ID
   CodeBuildProject:
     Type: AWS::CodeBuild::Project
-    DependsOn: [ CodeBuildServiceRole ]
     Properties:
-      Name: !Sub "${CodeCommitRepo}-Build"
+      Name: !Sub "cloud-native-application-CD"
       Artifacts:
         Type: "CODEPIPELINE"
       Source:
@@ -130,20 +105,16 @@ Resources:
               commands:
                 - echo Logging in to Amazon ECR...
                 - $(aws ecr get-login --region $AWS_DEFAULT_REGION --no-include-email)
-                - IMAGE_URI="$AWS_ACCOUNT_ID.dkr.ecr.$AWS_DEFAULT_REGION.amazonaws.com/$IMAGE_REPO_NAME:$IMAGE_TAG"
             build:
               commands:
                 - echo Build started on `date`
                 - echo Building the Docker image...
-                - docker build -t "$IMAGE_URI" .
+                - docker build -t $AWS_ACCOUNT_ID.dkr.ecr.$AWS_DEFAULT_REGION.amazonaws.com/$IMAGE_REPO_NAME:$IMAGE_TAG .
             post_build:
               commands:
                 - echo Build completed on `date`
                 - echo Pushing the Docker image...
-                - docker push "$IMAGE_URI"
-                - printf '[{"name":"simple-app","imageUri":"%s"}]' "$IMAGE_URI" > images.json
-          artifacts:
-            files: images.json
+                - docker push $AWS_ACCOUNT_ID.dkr.ecr.$AWS_DEFAULT_REGION.amazonaws.com/$IMAGE_REPO_NAME:$IMAGE_TAG
       Environment:
         ComputeType: BUILD_GENERAL1_SMALL
         Image: "aws/codebuild/docker:18.09.0"
@@ -157,22 +128,18 @@ Resources:
           - Name: AWS_DEFAULT_REGION
             Value: !Ref AWS::Region
           - Name: IMAGE_REPO_NAME
-            Value: !Ref ECRRepositoryName
+            Value: "cloud-native-app"
       ServiceRole: !Ref CodeBuildServiceRole
 
   Pipeline:
     Type: AWS::CodePipeline::Pipeline
-    DependsOn: [ CodePipelineServiceRole, CodeBuildProject ]
     Properties:
       RoleArn: !GetAtt CodePipelineServiceRole.Arn
       RestartExecutionOnUpdate: False
       ArtifactStore:
         Type: S3
         Location: !Ref ArtifactBucket
-      Name:  !Sub "${CodeCommitRepo}-Pipeline"
-      # DisableInboundStageTransitions:
-      #   - Reason: "Do not build when create or update this CFN"
-      #     StageName: "Build"
+      Name: "cloud-native-application-pipeline-cd"
       Stages:
         - Name: Source
           Actions:
@@ -183,14 +150,14 @@ Resources:
                 Version: 1
                 Provider: CodeCommit
               Configuration:
-                RepositoryName: !Ref CodeCommitRepo
-                BranchName: !Ref CodeCommitBranch
+                RepositoryName: "cloud-native-application"
+                BranchName: "master"
               OutputArtifacts:
                 - Name: App
               RunOrder: 1
-        - Name: Build
+        - Name: "BuildTestAndDeliver"
           Actions:
-            - Name: Build
+            - Name: "BuildTestAndDeliver"
               ActionTypeId:
                 Category: Build
                 Owner: AWS
@@ -201,21 +168,6 @@ Resources:
               InputArtifacts:
                 - Name: App
               OutputArtifacts:
-                - Name: BuildOutput
-              RunOrder: 1
-        - Name: Deploy
-          Actions:
-            - Name: Deploy
-              ActionTypeId:
-                Category: Deploy
-                Owner: AWS
-                Version: 1
-                Provider: ECS
-              Configuration:
-                ClusterName: !Ref Cluster
-                ServiceName: !Ref Service
-                FileName: images.json
-              InputArtifacts:
                 - Name: BuildOutput
               RunOrder: 1
 

@@ -69,7 +69,7 @@ Set up a Fargate cluster as the runtime environment for your docker containers u
 Extend the pipeline to deploy docker containers in the container cluster using images from the docker registry.
 
 #### Principles
-- Continous Deployment
+- Continuous Deployment
 
 ### 7. Verify that the application is reachable over the internet
 
