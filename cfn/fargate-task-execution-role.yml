@@ -27,6 +27,9 @@ Resources:
                   # Allow the ECS tasks to upload logs to CloudWatch
                   - 'logs:CreateLogStream'
                   - 'logs:PutLogEvents'
+
+                  # Allow the ECS tasks to access DynamoDB
+                  - 'dynamodb:Scan'
                 Resource: '*'
 
 Outputs:
