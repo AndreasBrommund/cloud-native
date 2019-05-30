@@ -7,10 +7,10 @@ The goal is to deliver an application into production globally in an automated a
 ## Principles
 
 - Containerization
-- Continous Integration
-- Continous Deployment
-- Infrastrucure as Code
-- Performance effiency
+- Continuous Integration
+- Continuous Deployment
+- Infrastructure as Code
+- Performance efficiency
 - Cost optimization
 - Security
 - Reliability
@@ -31,6 +31,10 @@ You need to have the following installed on your laptop:
 
 Clone the application code into your own repository
 
+#### Principles
+- Continuous Integration
+- Infrastructure as Code
+
 ### 2. Containerization
 
 How to execute and distribute an environment agnostic application.
@@ -43,24 +47,24 @@ How to execute and distribute an environment agnostic application.
 Set up a pipeline that pulls your code and runs the unit test suite.
 
 #### Principles
-- Continous Integration
-- Infrastrucure as Code
+- Continuous Integration
+- Infrastructure as Code
 
 ### 4. Container Registry (CD part i)
 
 Extend the pipeline to push your docker image to the docker registry (ECR)
 
 #### Principles
-- Continous Deployment
-- Infrastrucure as Code
+- Continuous Integration
+- Infrastructure as Code
 
 ### 5. Container Cluster
 
 Set up a Fargate cluster as the runtime environment for your docker containers using infrastructure as code.
 
 #### Principles
-- Infrastrucure as Code
-- Performance effiency
+- Infrastructure as Code
+- Performance efficiency
 - Cost optimization
 - Security
 
