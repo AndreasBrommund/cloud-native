@@ -46,7 +46,7 @@ Resources:
       CidrBlock: !Ref Subnet1CIDR
       Tags:
         - Key: Name
-          Value: "Cloud Native" (Public)
+          Value: "Cloud Native (Public)"
 
   Subnet2:
     Type: AWS::EC2::Subnet
@@ -57,7 +57,7 @@ Resources:
       CidrBlock: !Ref Subnet2CIDR
       Tags:
         - Key: Name
-          Value: "Cloud Native" (Public)
+          Value: "Cloud Native (Public)"
 
   RouteTable:
     Type: AWS::EC2::RouteTable
