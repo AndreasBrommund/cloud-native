@@ -1,0 +1,8 @@
+AWSTemplateFormatVersion: '2010-09-09'
+
+Resources:
+  CodeCommitRepo:
+    Type: AWS::CodeCommit::Repository
+    Properties:
+      RepositoryDescription: "Cloud Native Application Repository"
+      RepositoryName: "cloud-native-application"
