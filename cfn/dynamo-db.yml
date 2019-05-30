@@ -1,0 +1,20 @@
+Description:
+  This template deploys a Dynamo DB table for Movies.
+Resources:
+  BreakfastListGuestsDynamoDB:
+    Type: AWS::DynamoDB::Table
+    Properties:
+      TableName: "movies"
+      AttributeDefinitions:
+        - AttributeName: "title"
+          AttributeType: "S"
+        - AttributeName: "year-of-release"
+          AttributeType: "S"
+      KeySchema:
+        - AttributeName: "title"
+          KeyType: "HASH"
+        - AttributeName: "year-of-release"
+          KeyType: "RANGE"
+      ProvisionedThroughput:
+        ReadCapacityUnits: 5
+        WriteCapacityUnits: 5

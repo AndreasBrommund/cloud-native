@@ -62,6 +62,9 @@ Resources:
       ContainerDefinitions:
         - Name: simple-app
           Essential: 'true'
+          Environment:
+            - Name: "AWS_REGION"
+              Value: !Ref AWS::Region
           HealthCheck:
             Command: ["CMD-SHELL", "curl --fail --silent --output /dev/null http://127.0.0.1:8080/actuator/health"]
             Interval: 10

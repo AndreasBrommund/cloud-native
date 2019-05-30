@@ -90,9 +90,9 @@ The application needs a document database as a backend. Set up a DynamoDB instan
 - Serverless
 - Managed Services
 
-### 10. Global scale out
+### 10. Global scale out and failover
 
-Run the application in multiple regions using geolocation routing in Route 53.
+Run the application in multiple regions using geolocation routing in Route 53. Simulate the outage of a data center - thanks to your global presence your application is still available!
 
 #### Principles
 - Managed Services
