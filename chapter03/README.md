@@ -1,4 +1,4 @@
-## Chapter 3. Your first pipeline (CI).
+# Chapter 3. Your first pipeline (CI).
 
 This chapter will teach you how to create a pipeline that runs tests whenever you push to your CodeCommit repository.
 The pipeline and its steps is defined in code. Inspect the CloudFormation template `code-pipeline-ci.yml`. 

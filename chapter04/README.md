@@ -1,4 +1,4 @@
-## Chapter 4. Container Registry (CD part i).
+# Chapter 4. Container Registry (CD part i).
 
 In the last chapter the `feature` branch received CI capabilities. In this chapter, you will make a pipeline for continuous delivery of the `master` branch.
 The pipeline will produce a Docker image of the application that can be shipped to the servers running your application.

@@ -1,4 +1,4 @@
-## Chapter 1. Version control
+# Chapter 1. Version control
 
 Clone the application code into your own repository.
 
