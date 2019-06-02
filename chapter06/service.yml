@@ -1,0 +1,87 @@
+---
+AWSTemplateFormatVersion: 2010-09-09
+
+
+Parameters:
+  Cluster:
+    Type: String
+
+  RepositoryName:
+    Type: String
+
+  FargateTaskExecutionRole:
+    Type: String
+
+  DesiredCount:
+    Type: Number
+    Default: 1
+
+  TargetGroupArn:
+    Type: String
+
+  SourceSecurityGroup:
+    Type: AWS::EC2::SecurityGroup::Id
+
+  Subnets:
+    Type: List<AWS::EC2::Subnet::Id>
+
+Resources:
+  LogGroup:
+    Type: AWS::Logs::LogGroup
+    Properties:
+      LogGroupName: !Sub /ecs/${AWS::StackName}
+
+  FargateService:
+    Type: AWS::ECS::Service
+    Properties:
+      Cluster: !Ref Cluster
+      DesiredCount: !Ref DesiredCount
+      TaskDefinition: !Ref TaskDefinition
+      LaunchType: FARGATE
+      ServiceName: cloud-native-app
+      NetworkConfiguration:
+        AwsvpcConfiguration:
+          AssignPublicIp: ENABLED
+          SecurityGroups:
+            - !Ref SourceSecurityGroup
+          Subnets: !Ref Subnets
+      LoadBalancers:
+        - ContainerName: simple-app
+          ContainerPort: 8080
+          TargetGroupArn: !Ref TargetGroupArn
+
+  TaskDefinition:
+    Type: AWS::ECS::TaskDefinition
+    Properties:
+      RequiresCompatibilities:
+        - FARGATE
+      NetworkMode: awsvpc
+      Cpu: '1024'
+      Memory: '2GB'
+      ExecutionRoleArn: !Sub arn:aws:iam::${AWS::AccountId}:role/${FargateTaskExecutionRole}
+      ContainerDefinitions:
+        - Name: simple-app
+          Essential: 'true'
+          Environment:
+            - Name: "AWS_REGION"
+              Value: !Ref AWS::Region
+          HealthCheck:
+            Command: ["CMD-SHELL", "curl --fail --silent --output /dev/null http://127.0.0.1:8080/actuator/health"]
+            Interval: 10
+            Retries: 3
+            StartPeriod: 90
+            Timeout: 3
+          Image: !Sub ${AWS::AccountId}.dkr.ecr.${AWS::Region}.amazonaws.com/${RepositoryName}:latest
+          MemoryReservation: '768'
+          LogConfiguration:
+            LogDriver: awslogs
+            Options:
+              awslogs-region: !Ref AWS::Region
+              awslogs-group: !Ref LogGroup
+              awslogs-stream-prefix: !Ref AWS::StackName
+          PortMappings:
+            - ContainerPort: 8080
+
+Outputs:
+  Service:
+    Value: !Ref FargateService

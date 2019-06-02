@@ -1,0 +1,25 @@
+# Chapter 6. Container cluster deployment pipeline (CD part ii)
+
+To finalize our continuous deployment pipeline so that we can deploy and run our application in AWS we need to first create our service in AWS ECS and secondly we need to extend our pipeline with a deployment step.
+
+## Setting up the service 
+
+To be able to run our application we need to create a service definition and the service we define have to have a role that allows the service to access the resources it needs to start up and run. We have to create the role first as the service definition has a reference to the role.
+
+1. Open `fargate-task-execution-role.yml` and you'll see that the template will create one resource, an IAM role.
+1. The role will allow the task in ECS that'll run our service to download our application's Docker image from ECR, log to CloudWatch and access DynamoDB
+1. Go to CloudFormation in the AWS service menu and create a stack using the `fargate-task-execution-role.yml` template.
+1. When the stack has been created, go to IAM from the AWS service menu.
+1. Select roles from the menu on the left and then click on the role you just created, `AmazonECSTaskExecutionRolePolicy`
+1. Click on the arrow in the policy list and see that you've created a role with the privileges specified in the template.
+
+With the execution role in place we can create the service that will run our application.
+
+1. Have look at the `service.yml` template that we'll use to create our service.
+1. In the parameters block you can see the dependencies that the service has. The service will need to know which cluster to run in, which repository to fetch its Docker images from, which role it should use when executing tasks, the desired number of tasks the service should schedule, the target group it should belong to to, which security group to use and finally which subnets the service should belong to.
+1. There are three resources that the service template will create: the service itself, a log group in CloudWatch to stream log events to and a task definition.
+1. 
+
+## Extending the pipeline
+
+1. 
