@@ -1,6 +1,8 @@
 ---
 AWSTemplateFormatVersion: 2010-09-09
 
+Description: >
+  Creates a Load Balancer with listener, target group and security group
 
 Parameters:
   Subnets:

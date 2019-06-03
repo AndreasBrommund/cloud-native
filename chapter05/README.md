@@ -1,5 +1,7 @@
 # Chapter 5. Container Cluster
 
+In this chapter we'll create a container cluster where your application, packaged in a docker image, can run.
+
 The first step is to set up networking in your account. You'll need a VPC, two subnets, routing tables and an internet gateway.
 
 1. Open the the `vpc.yml` and have a look at the `Parameters` block. You will have to enter three CIDR blocks, on for the VPC and one for each of the subnets.

@@ -29,7 +29,7 @@ Resources:
   LogGroup:
     Type: AWS::Logs::LogGroup
     Properties:
-      LogGroupName: !Sub /ecs/${AWS::StackName}
+      LogGroupName: !Sub /ecs/${RepositoryName}
 
   FargateService:
     Type: AWS::ECS::Service

@@ -1,6 +1,8 @@
 ---
 AWSTemplateFormatVersion: 2010-09-09
 
+Description: >
+  Creates an ECS service with a CloudWatch log group and task definition
 
 Parameters:
   Cluster:
@@ -29,7 +31,7 @@ Resources:
   LogGroup:
     Type: AWS::Logs::LogGroup
     Properties:
-      LogGroupName: !Sub /ecs/${AWS::StackName}
+      LogGroupName: !Sub /ecs/${RepositoryName}
 
   FargateService:
     Type: AWS::ECS::Service

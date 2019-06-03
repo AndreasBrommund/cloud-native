@@ -1,6 +1,8 @@
 ---
 AWSTemplateFormatVersion: 2010-09-09
 
+Description: >
+  Creates a VPC, subnets, internet gateway an routing tables.
 
 Parameters:
   VpcCIDR:

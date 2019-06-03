@@ -1,6 +1,9 @@
 ---
 AWSTemplateFormatVersion: 2010-09-09
 
+Description: >
+  Creates an ECS Cluster
+
 Resources:
   Cluster:
     Type: AWS::ECS::Cluster
