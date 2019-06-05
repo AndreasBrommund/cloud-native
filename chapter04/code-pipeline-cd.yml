@@ -3,12 +3,7 @@ Description: >
 Parameters:
   CodeCommitRepo:
     Type: String
-  CodeCommitBranch:
-    Type: String
-    Default: master
   ECRRepositoryName:
-    Type: String
-  Cluster:
     Type: String
   Service:
     Type: String
@@ -180,7 +175,7 @@ Resources:
                 Provider: CodeCommit
               Configuration:
                 RepositoryName: !Ref CodeCommitRepo
-                BranchName: !Ref CodeCommitBranch
+                BranchName: "master"
               OutputArtifacts:
                 - Name: App
               RunOrder: 1
