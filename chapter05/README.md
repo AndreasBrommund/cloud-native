@@ -10,7 +10,7 @@ The first step is to set up networking in your account. You'll need a VPC, two s
 1. When the stack has been created, select VPC from the AWS service menu and click on "Your VPCs" in the column to the left to view the VPC you just created.
 1. In the same column to the left you can view the subnets, the internet gateway and the route tables that you just created.
 
-The second step is to create the loadbalancer that will front your services and distribute load between your different application instances.
+Once the VPC has been created, the second step is to create the loadbalancer that will front your services and distribute load between your different application instances.
 
 1. Open the `load-balancer.yml` file and once again have a look at the `Parameters` block. The load balancer template file has two inputs: subnets and a VPC. These parameters will specify which VPC and subnets that the load balancer and its components will live in.
 1. The template will create a load balancer with a security group that only allows incoming traffic on port 80 and 8080
