@@ -6,7 +6,7 @@ Parameters:
   Cluster:
     Type: String
 
-  RepositoryName:
+  RepositoryName: # TODO: rename to registryName?
     Type: String
 
   FargateTaskExecutionRole:

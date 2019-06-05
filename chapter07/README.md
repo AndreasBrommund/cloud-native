@@ -5,4 +5,4 @@ At this point everything is in place for calling your application over the inter
 1. Select EC2 from the AWS Service menu.
 1. Go to load balancers under the Load balance heading in the column to the left.
 1. Find your application's load balancer and copy it's DNS name.
-1. Use you browser, curl or something similar and make a call to https://<Load balancer DNS name>/movies and verify that you get a response.
+1. Use you browser, curl or something similar and make a call to `http://<Load balancer DNS name>/movies` and verify that you get a response.

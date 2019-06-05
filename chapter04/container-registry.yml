@@ -21,3 +21,6 @@ Resources:
               - "ecr:GetDownloadUrlForLayer"
               - "ecr:BatchGetImage"
               - "ecr:BatchCheckLayerAvailability"
+Outputs:
+  RegistryName:
+    Value: !Ref MyRepository
