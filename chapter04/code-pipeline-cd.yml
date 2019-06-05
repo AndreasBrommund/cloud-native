@@ -1,12 +1,5 @@
 Description: >
   A Continuous Deployment Pipeline for ECS using ECR, CodeCommit, CodePipeline and CodeBuild.
-Parameters:
-  CodeCommitRepo:
-    Type: String
-  ECRRepositoryName:
-    Type: String
-  Service:
-    Type: String
 
 Resources:
   ### IAM Permissions
@@ -105,13 +98,13 @@ Resources:
   ArtifactBucket:
     Type: AWS::S3::Bucket
     Properties:
-      BucketName: !Sub "${CodeCommitRepo}-${AWS::AccountId}-codepipeline-artifacts"
+      BucketName: !Sub "cloud-native-application-${AWS::AccountId}-codepipeline-cd-artifacts"
 
   CodeBuildProject:
     Type: AWS::CodeBuild::Project
     DependsOn: [ CodeBuildServiceRole ]
     Properties:
-      Name: !Sub "${CodeCommitRepo}-build"
+      Name: !Sub "cloud-native-application-build"
       Artifacts:
         Type: "CODEPIPELINE"
       Source:
@@ -151,7 +144,7 @@ Resources:
           - Name: AWS_DEFAULT_REGION
             Value: !Ref AWS::Region
           - Name: IMAGE_REPO_NAME
-            Value: !Ref ECRRepositoryName
+            Value: "cloud-native-app"
       ServiceRole: !Ref CodeBuildServiceRole
 
   Pipeline:
@@ -163,7 +156,7 @@ Resources:
       ArtifactStore:
         Type: S3
         Location: !Ref ArtifactBucket
-      Name:  !Sub "${CodeCommitRepo}-pipeline"
+      Name:  !Sub "cloud-native-application-pipeline"
       Stages:
         - Name: Source
           Actions:
@@ -174,7 +167,7 @@ Resources:
                 Version: 1
                 Provider: CodeCommit
               Configuration:
-                RepositoryName: !Ref CodeCommitRepo
+                RepositoryName: "cloud-native-application"
                 BranchName: "master"
               OutputArtifacts:
                 - Name: App
