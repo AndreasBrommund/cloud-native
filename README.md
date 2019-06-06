@@ -98,6 +98,10 @@ The application needs a document database as a backend. Set up a DynamoDB instan
 
 Run the application in multiple regions using geolocation routing in Route 53. Simulate the outage of a data center - thanks to your global presence your application is still available!
 
+#### Principles
+- Reliability
+- Scalability
+
 ### 11. Billing and cleanup
 
 What's the cost of the resources we've created and how can we remove no longer needed resources.

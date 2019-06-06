@@ -1,7 +1,7 @@
 Description:
   This template deploys a Dynamo DB table for Movies.
 Resources:
-  BreakfastListGuestsDynamoDB:
+  MoviesTable:
     Type: AWS::DynamoDB::Table
     Properties:
       TableName: "movies"

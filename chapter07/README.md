@@ -6,3 +6,5 @@ At this point everything is in place for calling your application over the inter
 1. Go to load balancers under the Load balance heading in the column to the left.
 1. Find your application's load balancer and copy it's DNS name.
 1. Use you browser, curl or something similar and make a call to `http://<Load balancer DNS name>/movies` and verify that you get a response.
+
+# TODO: possibly demonstrate that the application can save movies with its mocked movie repository
