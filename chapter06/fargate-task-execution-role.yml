@@ -35,3 +35,5 @@ Resources:
 Outputs:
   FargateTaskExecutionRole:
     Value: !Ref ECSTaskExecutionRole
+  FargateTaskExecutionRoleArn:
+    Value: !GetAtt ECSTaskExecutionRole.Arn

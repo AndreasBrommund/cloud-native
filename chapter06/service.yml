@@ -9,7 +9,7 @@ Parameters:
   RepositoryName: # TODO: rename to registryName?
     Type: String
 
-  FargateTaskExecutionRole:
+  FargateTaskExecutionRoleArn:
     Type: String
 
   DesiredCount:
@@ -58,7 +58,8 @@ Resources:
       NetworkMode: awsvpc
       Cpu: '1024'
       Memory: '2GB'
-      ExecutionRoleArn: !Sub arn:aws:iam::${AWS::AccountId}:role/${FargateTaskExecutionRole}
+      TaskRoleArn: !Ref FargateTaskExecutionRoleArn
+      ExecutionRoleArn: !Ref FargateTaskExecutionRoleArn
       ContainerDefinitions:
         - Name: simple-app
           Essential: 'true'
