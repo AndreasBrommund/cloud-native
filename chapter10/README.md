@@ -1,4 +1,4 @@
-### 10. Global scale out and failover
+# 10. Global scale out and failover
 
 Run the application in multiple regions using geolocation routing in Route 53. Simulate the outage of a data center - thanks to your global presence your application is still available!
 

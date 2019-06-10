@@ -1,4 +1,4 @@
-### 8. Scale out the application
+# 8. Scale out the application
 
 Modify the code that defines the container cluster to run more instances in parallel.
 

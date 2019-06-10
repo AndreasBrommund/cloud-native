@@ -1,4 +1,4 @@
-### 9. Cloud services - databases
+# 9. Cloud services - databases
 
 The application needs a document database as a backend. Set up a DynamoDB instance using infrastructure as code.
 

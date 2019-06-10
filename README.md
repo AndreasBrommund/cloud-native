@@ -112,10 +112,6 @@ What's the cost of the resources we've created and how can we remove no longer n
 ## Course ToDos
 
 - Verify that there are no service limits when e.g. running a cluster per student
-- Determine what the best account set up is for the course
-- What is the relationship between this course and the CI/CD introduction course? Will this course supersede the CI/CD course?
-
-Yes it will. CI/CD is an integral part of the cloud native course and will introduce CI/CD concepts to the students in a more realistic environment than the CI/CD introduction course.
 
 ## Cloud Native - Part ii
 
