@@ -23,6 +23,7 @@ You need to have the following installed on your laptop:
 
 - Java
 - Docker
+- Git
 - An IDE: IntelliJ or Eclipse for example
 
 ## Chapters
