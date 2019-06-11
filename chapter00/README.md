@@ -4,6 +4,7 @@ To be able to participate in the course you'll need the following installed on y
 
 - Java
 - Docker
+- Git
 - An IDE: IntelliJ or Eclipse for example
 
 On top of that you need a personal AWS account set up in the Omegapoint AWS organization
