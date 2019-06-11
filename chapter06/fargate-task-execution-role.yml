@@ -30,6 +30,7 @@ Resources:
 
                   # Allow the ECS tasks to access DynamoDB
                   - 'dynamodb:Scan'
+                  - 'dynamodb:BatchWriteItem'
                 Resource: '*'
 
 Outputs:
