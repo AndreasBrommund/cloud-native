@@ -97,7 +97,7 @@ The application needs a document database as a backend. Set up a DynamoDB instan
 
 ### 10. Global scale out and failover
 
-Run the application in multiple regions using geolocation routing in Route 53. Simulate the outage of a data center - thanks to your global presence your application is still available!
+Run the application in multiple regions using and balance traffic with failover routing in Route 53. Simulate the outage of a data center - thanks to your global presence your application is still available!
 
 #### Principles
 - Reliability
@@ -109,10 +109,6 @@ What's the cost of the resources we've created and how can we remove no longer n
 
 #### Principles
 - Managed Services
-
-## Course ToDos
-
-- Verify that there are no service limits when e.g. running a cluster per student
 
 ## Cloud Native - Part ii
 
