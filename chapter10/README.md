@@ -4,7 +4,7 @@ Run the application in multiple regions using and balance traffic with failover 
 This step requires somewhat more proficiency and assumes that you have a hosted zone.
 
 1. Deploy your entire application stack (VPC, Load balancer, ECS cluster, and Service) into another region, for example somewhere in America.
-2. TODO: Deploy DynamoDB globally.
+2. You must make your DynamoDB table global. Unfortunately, this cannot be achieved through infrastructure as code. Go to your DynamoDB table, and press Global tables. Follow the instructions (your table must be emptied, unfortunately) and deploy your table in your secondary region.
 2. Inspect the template `route53.yml`. It manages a DNS zone, and sets up geolocation based routing to the underlying hosts - your load balancers in Europe and America.
 3. Deploy the template. Inspect the DNS records that are created in Route53, and the health check. The health check should be green and up.
 4. Browse to your domain, and inspect the app. You can see which AWS region it is running in by browsing to `/region`.
