@@ -1,0 +1,54 @@
+AWSTemplateFormatVersion: '2010-09-09'
+
+Parameters:
+  DomainName:
+    Type: String
+    Description: "Domain name. Must be a hosted zone in Route53, and end with a trailing dot."
+  PrimaryHost:
+    Type: String
+    Description: "FQDN for the primary host (no http(s), no slashes)"
+  PrimaryHostHostedZone:
+    Type: String
+    Description: "Hosted zone of your load balancer. Get it from the EC2 console -> Load balancers -> Your LB -> Hosted zone."
+  FailoverHost:
+    Type: String
+    Description: "FQDN for the primary host (no http(s), no slashes)"
+  FailoverHostHostedZone:
+    Type: String
+    Description: "Hosted zone of your load balancer. Get it from the EC2 console -> Load balancers -> Your LB -> Hosted zone."
+
+Resources:
+  MoviesHealthCheck:
+    Type: AWS::Route53::HealthCheck
+    Properties:
+      HealthCheckConfig:
+        FullyQualifiedDomainName: !Ref PrimaryHost
+        ResourcePath: "/region"
+        Type: HTTP
+
+  PrimaryDNSRecord:
+    Type: AWS::Route53::RecordSet
+    Properties:
+      AliasTarget:
+        DNSName: !Ref PrimaryHost
+        EvaluateTargetHealth: false
+        HostedZoneId: !Ref PrimaryHostHostedZone
+      Failover: PRIMARY
+      HealthCheckId: !Ref MoviesHealthCheck
+      HostedZoneName: !Ref DomainName
+      Name: !Ref DomainName
+      SetIdentifier: "Primary"
+      Type: "A"
+
+  SecondaryDNSRecord:
+    Type: AWS::Route53::RecordSet
+    Properties:
+      AliasTarget:
+        DNSName: !Ref FailoverHost
+        EvaluateTargetHealth: false
+        HostedZoneId: !Ref FailoverHostHostedZone
+      Failover: SECONDARY
+      HostedZoneName: !Ref DomainName
+      Name: !Ref DomainName
+      SetIdentifier: "Secondary"
+      Type: "A"
