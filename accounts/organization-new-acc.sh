@@ -72,6 +72,7 @@ do
   if [ $orgStat = "FAILED" ]
   then
     printf "\nAccount Failed to Create\n"
+    aws organizations describe-create-account-status --create-account-request-id $ReqID
     exit 1
   fi
   printf "."
@@ -85,7 +86,7 @@ accID=$(aws organizations describe-create-account-status --create-account-reques
 --query 'CreateAccountStatus.[AccountId]' \
 --output text)
 
-printf "Account id: $accID\n"
+printf "\nAccount id: $accID\n"
 
 accARN="arn:aws:iam::$accID:role/$roleName"
 
