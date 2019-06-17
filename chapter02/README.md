@@ -8,6 +8,6 @@ To be able to reliably and reproducibly build, ship and deploy our application w
 1. The next step is to automate what you just did manually and make sure that we can compile, test, package and run the application no matter what the underlying infrastructure is.
 1. Have a look at the `Dockerfile` in the application repository which is a recipe for Docker how to build a runnable Docker image
 1. There are two stages in the Dockerfile: one to compile, test and package the application using a Maven Docker image and a second stage that runs the fat jar in a Java 11 Docker image. The second stage defines the Docker image that will be kept, the first stage is thrown away after the build.
-1. Build the Docker image locally: `docker build -t cloud-native-app .`
+1. Build the Docker image locally: `docker build -t cloud-native-app .` (NB: you may have to be root to run these commands)
 1. Make sure that the Docker image is stored in your local Docker repository: `docker image ls`
-1. Run the application locally: ` docker run -e AWS_REGION=eu-west-1 -t cloud-native-app -p8080:8080` 
+1. Run the application locally: ` docker run -t cloud-native-app -p8080:8080` 

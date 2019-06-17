@@ -29,7 +29,7 @@ Resources:
   LogGroup:
     Type: AWS::Logs::LogGroup
     Properties:
-      LogGroupName: !Sub /ecs/${RepositoryName}
+      LogGroupName: !Sub /ecs/${RegistryName}
 
   FargateService:
     Type: AWS::ECS::Service
@@ -72,7 +72,7 @@ Resources:
             Retries: 3
             StartPeriod: 90
             Timeout: 3
-          Image: !Sub ${AWS::AccountId}.dkr.ecr.${AWS::Region}.amazonaws.com/${RepositoryName}:latest
+          Image: !Sub ${AWS::AccountId}.dkr.ecr.${AWS::Region}.amazonaws.com/${RegistryName}:latest
           MemoryReservation: '768'
           LogConfiguration:
             LogDriver: awslogs
