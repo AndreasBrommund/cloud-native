@@ -10,7 +10,7 @@ Clone the application code into your own repository.
 6. Click on `Create stack` and select the template file. Click `Next`.
 7. Give the stack a(ny) name and disable rollback on failure under *Advanced options* > *Stack creation options*. Disabling rollback on failure will help you to investigate what went wrong if the stack fails to be created.
 8. Click `Next`, followed by `Create stack` and wait for the stack to be created 
-9. Browse to the repository you just created in CodeCommit. Click on *Services*, type *CodeCommit*, and click on *Repositories*. You should see the *cloud-native-application* repository. Open it, and you will see instructions for setting up SSH access to CodeCommit.
+9. Browse to the repository you just created in CodeCommit. Click on *Services*, type *CodeCommit*, and click on *Repositories*. You should see the *cloud-native-application* repository. Open it, and you will see instructions for setting up SSH access to CodeCommit. You meet the prerequisites in step one so start from step two. It's perfectly fine to use ssh keys that you already have.
 10. Follow the instructions for setting up SSH access on your OS. 
 11. The application code skeleton is available on [Github](https://github.com/Omegapoint/cloud-native-application). Clone the repository from Github and open the `.git/config` file.
 12. In the `.git/config` file, change the url property under the `[remote "origin"]` header to the git clone path provided by CodeCommit. The new url line should look like this or something similar: `url = ssh://git-codecommit.eu-west-1.amazonaws.com/v1/repos/cloud-native-application`
