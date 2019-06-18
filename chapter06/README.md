@@ -18,7 +18,7 @@ With the execution role in place we can create the service that will run our app
 1. Have look at the `service.yml` template that we'll use to create our service.
 1. In the parameters block you can see the dependencies that the service has. The service will need to know which cluster to run in, which repository to fetch its Docker images from, which role it should use when executing tasks, the desired number of tasks the service should schedule, the target group it should belong to to, which security group to use and finally which subnets the service should belong to.
 1. There are three resources that the service template will create: the service itself, a log group in CloudWatch to stream log events to and a task definition.
-1. Create a stack in CloudFormation using the `service.yml` template. The input to the stack is outputs from previous stacks.
+1. Create a stack in CloudFormation using the `service.yml` template. The input to the stack are outputs from previous stacks.
 1. The instances of your application that the service launches will all log to a log group in CloudWatch. Browse to CloudWatch from the AWS service menu. 
 1. Open the log group of your application and you'll see the different log streams. Each of the log streams corresponds to one instance of your application. Open the latest logstream and verify that you get the same printouts as when you were successfully running the application locally.
 1. Finally, select ECS from the AWS service menu and click on your cluster. You should be able to see your service up and running in the cluster.
