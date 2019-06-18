@@ -7,6 +7,12 @@ Resources:
     Properties:
       ClusterName: !Ref AWS::StackName
 
+  EcsServiceLinkedRole:
+    Type: "AWS::IAM::ServiceLinkedRole"
+    Properties:
+      AWSServiceName: "ecs.amazonaws.com"
+      Description: "Role to enable Amazon ECS to manage your cluster."
+
 Outputs:
   ClusterName:
       Value: !Ref Cluster
