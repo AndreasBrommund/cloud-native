@@ -26,6 +26,12 @@ Parameters:
     Type: List<AWS::EC2::Subnet::Id>
 
 Resources:
+  EcsServiceLinkedRole:
+    Type: "AWS::IAM::ServiceLinkedRole"
+    Properties:
+      AWSServiceName: "ecs.amazonaws.com"
+      Description: "Role to enable Amazon ECS to manage your cluster."
+
   LogGroup:
     Type: AWS::Logs::LogGroup
     Properties:
@@ -49,6 +55,7 @@ Resources:
         - ContainerName: simple-app
           ContainerPort: 8080
           TargetGroupArn: !Ref TargetGroupArn
+    DependsOn: EcsServiceLinkedRole
 
   TaskDefinition:
     Type: AWS::ECS::TaskDefinition
