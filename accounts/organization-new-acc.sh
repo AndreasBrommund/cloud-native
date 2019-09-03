@@ -14,12 +14,12 @@ function usage
     echo "usage: organization_new_acc.sh [-h] --account_name ACCOUNT_NAME
                                       --account_email ACCOUNT_EMAIL
                                       --cl_profile_name CLI_PROFILE_NAME
-                                      [--user_first_name USER_FIRST_NAME]
+                                      --user_first_name USER_FIRST_NAME
                                       [--region AWS_REGION]"
 }
 
 userFirstName=""
-password=$(date +%s | sha256sum | base64 | head -c 10)
+password=$(openssl rand -base64 10 | head -c 10)
 newAccName=""
 newAccEmail=""
 newProfile=""
