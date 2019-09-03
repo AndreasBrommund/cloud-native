@@ -5,6 +5,7 @@ AWSTemplateFormatVersion: 2010-09-09
 Parameters:
   Cluster:
     Type: String
+    Description: Just the Cluster name, not the entire ARN.
 
   RegistryName:
     Type: String
@@ -18,6 +19,7 @@ Parameters:
 
   TargetGroupArn:
     Type: String
+    Description: From the Load balancer.
 
   SourceSecurityGroup:
     Type: AWS::EC2::SecurityGroup::Id
@@ -58,7 +60,7 @@ Resources:
         - FARGATE
       NetworkMode: awsvpc
       Cpu: '1024'
-      Memory: '2GB'
+      Memory: '1GB'
       TaskRoleArn: !Ref FargateTaskExecutionRoleArn
       ExecutionRoleArn: !Ref FargateTaskExecutionRoleArn
       ContainerDefinitions:
@@ -74,7 +76,7 @@ Resources:
             StartPeriod: 90
             Timeout: 3
           Image: !Sub ${AWS::AccountId}.dkr.ecr.${AWS::Region}.amazonaws.com/${RegistryName}:latest
-          MemoryReservation: '768'
+          MemoryReservation: '1024'
           LogConfiguration:
             LogDriver: awslogs
             Options:

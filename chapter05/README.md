@@ -6,7 +6,7 @@ The first step is to set up networking in your account. You'll need a VPC, two s
 
 1. Open the the `vpc.yml` and have a look at the `Parameters` block. You will have to enter three CIDR blocks, on for the VPC and one for each of the subnets.
 1. Under the `Resources` block in in `vpc.yml` you'll see that besides the VPC and our two subnets, an internet gateway and routing tables will be created.
-1. Go to CloudFormation in the AWS service menu and choose create stack. Select the `vpc.yml` template. Fill out the CIDR block fields for the VPC and the subnets and create the stack.
+1. Go to CloudFormation in the AWS service menu and choose Create stack. Select the `vpc.yml` template. Use the prefilled entries, or fill out the CIDR block fields for the VPC and the subnets and create the stack.
 1. When the stack has been created, select VPC from the AWS service menu and click on "Your VPCs" in the column to the left to view the VPC you just created.
 1. In the same column to the left you can view the subnets, the internet gateway and the route tables that you just created.
 
@@ -16,10 +16,10 @@ Once the VPC has been created, the second step is to create the loadbalancer tha
 1. The template will create a load balancer with a security group that only allows incoming traffic on port 80 and 8080
 1. A listener that connects to load balancer with one listener rule will be created as well.
 1. Finally a target group with a health check will be created and references from the listener
-1. Go to CloudFormation in the AWS service menu and choose create stack. Select the `load-balancer.yml`file. Choose the VPC and the two subnets you just created as parameter values to the stack and create the stack.
+1. Go to CloudFormation in the AWS service menu and choose Create stack. Select the `load-balancer.yml`file. Choose the VPC and the two subnets (hint: they're the ones called `Cloud Native`) you just created as parameter values in the dropdown (the gui is a bit unclear that you have actually chosen them) to the stack and create the stack.
 1. When the stack has been created select EC2 in the AWS service menu.
 1. In the column to the left under the "Load Balancing" header, select "Load Balancers" and have a look at the load balancer you just created.
-1. Under the same header in the column to the left, select "Target Groups" and have a look at the target group you just created. You can e.g. see monitoring of the target group.
+1. Under the same header in the column to the left, select "Target Groups" and have a look at the target group you just created. You can for example see monitoring of the target group.
 
 The final step is to create the container cluster.
 

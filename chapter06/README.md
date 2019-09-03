@@ -1,10 +1,10 @@
 # Chapter 6. Container cluster deployment pipeline (CD part ii)
 
-To finalize our continuous deployment pipeline so that we can deploy and run our application in AWS we need to first create our service in AWS ECS and secondly we need to extend our pipeline with a deployment step.
+To finalize our continuous deployment pipeline so that we can deploy and run our application in AWS we need to first create our service in AWS ECS, and secondly we need to extend our pipeline with a deployment step.
 
 ## Setting up the service 
 
-To be able to run our application we need to create a service definition and the service we define have to have a role that allows the service to access the resources it needs to start up and run. We have to create the role first as the service definition has a reference to the role.
+To be able to run our application we need to create a service definition and the service we define has to have a role that allows the service to access the resources it needs to start up and run. We have to create the role first as the service definition has a reference to the role.
 
 1. Open `fargate-task-execution-role.yml` and you'll see that the template will create one resource, an IAM role.
 1. The role will allow the task in ECS that'll run our service to download our application's Docker image from ECR, log to CloudWatch and access DynamoDB
@@ -31,4 +31,4 @@ In chapter 4 we created a pipeline that builds, tests, packages the application 
 1. In CloudFormation select your pipeline stack and update the stack with the `code-pipeline-cd.yml` template from this folder.
 1. Trigger the pipeline by doing a commit of your choice the `cloud-native-app` repo.
 1. Watch the pipeline build, package and deploy your change to the ECS cluster in the CodePipeline console.
-1. Go to the ECS view in AWS and open your service. Have a look at the Events tab and you can see the deployment process of your service. In the Tasks tab, click on the task definition and verify that Docker image used by your service is tagged with your latest git commit hash. In `code-pipeline-cd.yml` template file you can look up how the pipeline tags the docker image.
+1. Go to the ECS view in AWS and open your service. Have a look at the Events tab and you can see the deployment process of your service. In the Tasks tab, click on the task definition and verify that it is running the image from your ECR repository. In the `code-pipeline-cd.yml` template file you can look up how the pipeline tags the docker image.

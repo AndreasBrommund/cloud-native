@@ -3,6 +3,7 @@ AWSTemplateFormatVersion: 2010-09-09
 
 Resources:
   Cluster:
+    DependsOn: EcsServiceLinkedRole
     Type: AWS::ECS::Cluster
     Properties:
       ClusterName: !Ref AWS::StackName

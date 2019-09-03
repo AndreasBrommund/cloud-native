@@ -3,8 +3,10 @@ Description: >
 Parameters:
   Cluster:
     Type: String
+    Description: Just the name, not the entire ARN of the Cluster.
   Service:
     Type: String
+    Description: Just the name, not the entire ARN of the Service.
 
 Resources:
   ### IAM Permissions
