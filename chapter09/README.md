@@ -9,3 +9,4 @@ The application needs a document database as a backend. Set up a DynamoDB instan
 4. Commit and push to your `feature` branch, and make sure that the application builds and passes its tests.
 5. Once the `feature` branch has been built, push to master and watch code pipeline build and deploy your new application.
 6. Test your application by adding movies and refreshing the page. You can scale and shut down services freely - the movie state will still be maintained.
+7. You can inspect your movie data store by looking at the table in the DynamoDB console. 
